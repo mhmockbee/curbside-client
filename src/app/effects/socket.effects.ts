@@ -47,5 +47,9 @@ export class SocketEffects {
     this.hubConnection.on('OrderItemProcessed', (data) =>
       this.store.dispatch(actions.orderItemProcessed({ ...data }))
     );
+
+    this.hubConnection.on('ApiOrderPlaced', (data) => {
+      console.log(`We got an order from someone! ${data}`);
+    });
   }
 }
