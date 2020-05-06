@@ -21,7 +21,10 @@ const initialState = adapter.getInitialState({
 const reducerFunction = createReducer(
   initialState,
   on(actions.orderPlaced, (s, a) => adapter.addOne(a.payload, s)),
-  on(actions.orderProcessed, (s, a) => adapter.upsertOne(a.payload, s)),
+  on(actions.orderProcessed, (s, a) => {
+    const temp = adapter.upsertOne(a.payload, s);
+    return { ...temp, message: null };
+  }),
   on(actions.orderItemProcessed, (s, a) => ({
     ...s,
     message: `Updated ${a.itemId} of order ${a.id}`,
